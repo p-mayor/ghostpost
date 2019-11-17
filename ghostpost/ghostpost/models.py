@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Post(models.Model):
     post_text = models.CharField(max_length=280)
     boast = models.BooleanField(default=True)

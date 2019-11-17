@@ -5,18 +5,18 @@ from .forms import PostForm
 
 
 def add_post(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect("/")
     else:
         form = PostForm()
-    return render(request, 'add_post.html', {'form':form})
-   
+    return render(request, "add_post.html", {"form": form})
+
 
 def homepage(request):
-    return render(request, 'homepage.html')
+    return render(request, "homepage.html")
 
 
 # def sort_by_likes(request):

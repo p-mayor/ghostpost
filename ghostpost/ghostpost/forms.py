@@ -2,10 +2,9 @@ from django import forms
 
 from .models import Post
 
+
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = [
-            'boast',
-            'post_text'
-        ]
+        fields = ["boast", "post_text"]
+

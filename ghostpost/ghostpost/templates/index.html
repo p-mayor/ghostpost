@@ -2,9 +2,11 @@
 <a href="{% url 'homepage' %}"><button>Home</button></a>
 <a href="{% url 'boast_list' %}"><button>boasts only</button></a>
 <a href="{% url 'roast_list' %}"><button>roasts only</button></a>
+<a href="{% url 'votesort' %}"><button>sort by vote</button></a>
 <a href="{% url 'add_post' %}"><button>add a boast or roast</button></a>
 {% if latest_post_list %}
 <div>
+  <h1>Boasts and Roasts</h1>
   {% for post in latest_post_list %}
   <div>
     <ul>
@@ -17,48 +19,75 @@
       <li>
         Boast?: {{post.boast}}
       </li>
+      <li>
+        Votes: {{post.votes}}
+      </li>
     </ul>
-    <a href="{% url 'upvote' %}"><button>Upvote</button></a>
-    <a href="{% url 'downvote' %}"><button>downvote</button></a>
-    <hr/>
+    <form name="upvote" method="post" action="{% url 'upvote' post.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Upvote" />
+    </form>
+    <form name="downvote" method="post" action="{% url 'downvote' post.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Downvote" />
+    </form>
+    <hr />
   </div>
   {% endfor %}
 </div>
 {% elif boast_post_list %}
 <div>
   <h1>Boasts</h1>
-  {% for boast in boast_post_list %}
+  {% for post in boast_post_list %}
   <div>
     <ul>
       <li>
-        {{ boast.post_text }}
+        {{ post.post_text }}
       </li>
       <li>
-        <em>{{boast.pub_date}}</em>
+        <em>{{post.pub_date}}</em>
+      </li>
+      <li>
+        Votes: {{post.votes}}
       </li>
     </ul>
-    <a href="{% url 'upvote' %}"><button>Upvote</button></a>
-    <a href="{% url 'downvote' %}"><button>downvote</button></a>
-    <hr/>
+    <form name="upvote" method="post" action="{% url 'upvote' post.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Upvote" />
+    </form>
+    <form name="downvote" method="post" action="{% url 'downvote' post.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Downvote" />
+    </form>
+    <hr />
   </div>
   {% endfor %}
 </div>
 {% elif roast_post_list %}
 <div>
-    <h1>Roasts</h1>
-  {% for roast in roast_post_list %}
+  <h1>Roasts</h1>
+  {% for post in roast_post_list %}
   <div>
     <ul>
       <li>
-        {{ roast.post_text }}
+        {{ post.post_text }}
       </li>
       <li>
-        <em>{{roast.pub_date}}</em>
+        <em>{{post.pub_date}}</em>
+      </li>
+      <li>
+        Votes: {{post.votes}}
       </li>
     </ul>
-    <a href="{% url 'upvote' %}"><button>Upvote</button></a>
-    <a href="{% url 'downvote' %}"><button>downvote</button></a>
-    <hr/>
+    <form name="upvote" method="post" action="{% url 'upvote' post.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Upvote" />
+    </form>
+    <form name="downvote" method="post" action="{% url 'downvote' post.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Downvote" />
+    </form>
+    <hr />
   </div>
   {% endfor %}
 </div>

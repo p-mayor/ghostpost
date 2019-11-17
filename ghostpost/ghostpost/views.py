@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 
 from .models import Post
 from .forms import PostForm
@@ -16,27 +16,42 @@ def add_post(request):
 
 
 def index(request):
-    latest_post_list = Post.objects.order_by('pub_date')
-    context = {'latest_post_list': latest_post_list}
-    return render(request, 'index.html', context)
+    latest_post_list = Post.objects.order_by("pub_date")
+    context = {"latest_post_list": latest_post_list}
+    return render(request, "index.html", context)
 
 
-# def sort_by_likes(request):
+def sort_by_votes(request):
+    latest_post_list = Post.objects.order_by("-votes")
+    context = {"latest_post_list": latest_post_list}
+    return render(request, "index.html", context)
 
-# def sort_by_likes_reverse(request):
 
 def sort_by_boast(request):
     boast_post_list = Post.objects.filter(boast=True)
-    context = {'boast_post_list': boast_post_list}
-    return render(request, 'index.html', context)
+    context = {"boast_post_list": boast_post_list}
+    return render(request, "index.html", context)
+
 
 def sort_by_roast(request):
     roast_post_list = Post.objects.filter(boast=False)
-    context = {'roast_post_list': roast_post_list}
-    return render(request, 'index.html', context)
+    context = {"roast_post_list": roast_post_list}
+    return render(request, "index.html", context)
 
-def upvote(request):
-    return render(request, 'index.html')
 
-def downvote(request):
-    return render(request, 'index.html')
+def upvote(request, post_id):
+    latest_post_list = Post.objects.order_by("pub_date")
+    context = {"latest_post_list": latest_post_list}
+    post = get_object_or_404(Post, pk=post_id)
+    post.votes += 1
+    post.save()
+    return render(request, "index.html", context)
+
+
+def downvote(request, post_id):
+    latest_post_list = Post.objects.order_by("pub_date")
+    context = {"latest_post_list": latest_post_list}
+    post = get_object_or_404(Post, pk=post_id)
+    post.votes -= 1
+    post.save()
+    return render(request, "index.html", context)

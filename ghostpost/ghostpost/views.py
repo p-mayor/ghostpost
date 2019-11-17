@@ -15,22 +15,28 @@ def add_post(request):
     return render(request, "add_post.html", {"form": form})
 
 
-def homepage(request):
-    return render(request, "homepage.html")
+def index(request):
+    latest_post_list = Post.objects.order_by('pub_date')
+    context = {'latest_post_list': latest_post_list}
+    return render(request, 'index.html', context)
 
 
 # def sort_by_likes(request):
 
 # def sort_by_likes_reverse(request):
 
-# def sort_by_boast(request):
+def sort_by_boast(request):
+    boast_post_list = Post.objects.filter(boast=True)
+    context = {'boast_post_list': boast_post_list}
+    return render(request, 'index.html', context)
 
-# def sort_by_roast(request):
+def sort_by_roast(request):
+    roast_post_list = Post.objects.filter(boast=False)
+    context = {'roast_post_list': roast_post_list}
+    return render(request, 'index.html', context)
 
-# def boast(request):
+def upvote(request):
+    return render(request, 'index.html')
 
-# def roast(request):
-
-# def add_like(request):
-
-# def remove_like(request):
+def downvote(request):
+    return render(request, 'index.html')

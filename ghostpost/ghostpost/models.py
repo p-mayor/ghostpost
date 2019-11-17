@@ -8,3 +8,5 @@ class Post(models.Model):
     votes = models.IntegerField(default=0)
     upordown = models.IntegerField(default=0)
     pub_date = models.DateTimeField(default=timezone.now)
+    def __str__(self):
+        return self.post_text

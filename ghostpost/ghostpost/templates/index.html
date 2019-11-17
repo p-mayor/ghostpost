@@ -1,1 +1,67 @@
-<h1>hello</h1>
+<h1>Welcome to ghostpost</h1>
+<a href="{% url 'homepage' %}"><button>Home</button></a>
+<a href="{% url 'boast_list' %}"><button>boasts only</button></a>
+<a href="{% url 'roast_list' %}"><button>roasts only</button></a>
+<a href="{% url 'add_post' %}"><button>add a boast or roast</button></a>
+{% if latest_post_list %}
+<div>
+  {% for post in latest_post_list %}
+  <div>
+    <ul>
+      <li>
+        {{ post.post_text }}
+      </li>
+      <li>
+        <em>{{post.pub_date}}</em>
+      </li>
+      <li>
+        Boast?: {{post.boast}}
+      </li>
+    </ul>
+    <a href="{% url 'upvote' %}"><button>Upvote</button></a>
+    <a href="{% url 'downvote' %}"><button>downvote</button></a>
+    <hr/>
+  </div>
+  {% endfor %}
+</div>
+{% elif boast_post_list %}
+<div>
+  <h1>Boasts</h1>
+  {% for boast in boast_post_list %}
+  <div>
+    <ul>
+      <li>
+        {{ boast.post_text }}
+      </li>
+      <li>
+        <em>{{boast.pub_date}}</em>
+      </li>
+    </ul>
+    <a href="{% url 'upvote' %}"><button>Upvote</button></a>
+    <a href="{% url 'downvote' %}"><button>downvote</button></a>
+    <hr/>
+  </div>
+  {% endfor %}
+</div>
+{% elif roast_post_list %}
+<div>
+    <h1>Roasts</h1>
+  {% for roast in roast_post_list %}
+  <div>
+    <ul>
+      <li>
+        {{ roast.post_text }}
+      </li>
+      <li>
+        <em>{{roast.pub_date}}</em>
+      </li>
+    </ul>
+    <a href="{% url 'upvote' %}"><button>Upvote</button></a>
+    <a href="{% url 'downvote' %}"><button>downvote</button></a>
+    <hr/>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No posts are available.</p>
+{% endif %}

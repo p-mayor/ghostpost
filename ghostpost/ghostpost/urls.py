@@ -22,6 +22,10 @@ admin.site.register(Post)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("upvote/", views.upvote, name="upvote"),
+    path("downvote/", views.downvote, name="downvote"),
+    path("filterboast/", views.sort_by_boast, name="boast_list"),
+    path("filterroast/", views.sort_by_roast, name="roast_list"),
     path("add_post/", views.add_post, name="add_post"),
     path("", views.index, name="homepage"),
 ]
